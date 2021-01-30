@@ -159,3 +159,12 @@ class Stock(Base):
         """
         return database_session.query(exists().where(and_(cls.StockCode == code,
                                                           cls.UpdateDate == date))).scalar()
+
+    @property
+    def toJSON(self):
+        return {
+            'stock_code': self.StockCode.strip(),
+            'stock_name': self.StockName.strip(),
+            'stock_label': self.StockCode + ' - ' + self.StockName,
+
+        }

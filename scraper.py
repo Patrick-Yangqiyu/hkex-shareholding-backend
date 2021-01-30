@@ -8,7 +8,7 @@ import hkex_query
 from models import Stock, Participant, Snapshot, Detail
 
 from database import database_session, db
-log_name = datetime.now().strftime('mylogfile_%Y-%m-%d_%H-%M-%S.log')
+log_name = datetime.now().strftime('scraper_logfile_%Y-%m-%d_%H-%M-%S.log')
 
 logging.basicConfig(filename=log_name, filemode='w', format='%(asctime)s %(filename)s: %(message)s',
                     datefmt='%Y-%m-%d %H:%M:%S',
@@ -86,4 +86,4 @@ for stock in query.all():
     except Exception as e:
         logger.exception(e)
         logger.debug(f"ERROR on - STOCK CODE :{stock.StockCode} , Date:{date_str}")
-        continue  # or you could use 'continue'
+        continue
