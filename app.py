@@ -5,6 +5,7 @@ from sqlalchemy import text
 
 from models import Detail, Stock
 from flask_cors import CORS
+from gevent import pywsgi
 
 app = Flask(__name__)
 CORS(app)
@@ -142,5 +143,6 @@ api.add_resource(Trend, '/trend')
 api.add_resource(Transaction, '/transaction')
 api.add_resource(StockName, '/stock')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
+server.serve_forever()
+
