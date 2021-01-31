@@ -25,7 +25,7 @@ parser.add_argument('threshold', type=float)
 
 
 class Trend(Resource):
-    def post(self):
+    def get(self):
         args = parser.parse_args()
         stock_code = args['stock_code']
         start_date = args['start_date']
@@ -48,7 +48,8 @@ class Trend(Resource):
                            and detail_rank."StockCode" = :stockcode
                      )
                        and hkex.detail."StockCode" = :stockcode
-                       and hkex.detail."RecordDate" >= to_date(:startdate, 'YYYYMMDD') AND hkex.detail."RecordDate" <= to_date(:enddate, 'YYYYMMDD');
+                       and hkex.detail."RecordDate" >= to_date(:startdate, 'YYYYMMDD') AND hkex.detail."RecordDate" <= to_date(:enddate, 'YYYYMMDD')
+                       order by hkex.detail."RecordDate" ;
 
         '''
         stmt = text(sql)
@@ -58,7 +59,7 @@ class Trend(Resource):
 
 
 class Transaction(Resource):
-    def post(self):
+    def get(self):
         args = parser.parse_args()
         stock_code = args['stock_code']
         start_date = args['start_date']
@@ -122,6 +123,7 @@ class Transaction(Resource):
                               ) As abs_table
                      ) As rank_table
                 WHERE rank_table.rank = 1
+                order by "RecordDate" desc, "Shareholding" desc
 '''
         stmt = text(sql)
         query = db.session.execute(stmt, {"startdate": start_date, "enddate": end_date, "stockcode": stock_code,
