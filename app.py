@@ -50,7 +50,7 @@ class Trend(Resource):
                      )
                        and hkex.detail."StockCode" = :stockcode
                        and hkex.detail."RecordDate" >= to_date(:startdate, 'YYYYMMDD') AND hkex.detail."RecordDate" <= to_date(:enddate, 'YYYYMMDD')
-                       order by hkex.detail."RecordDate" ;
+                       order by hkex.detail."RecordDate" desc, hkex.detail."Shareholding" desc;
 
         '''
         stmt = text(sql)

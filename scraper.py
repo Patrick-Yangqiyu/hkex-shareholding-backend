@@ -15,7 +15,7 @@ logging.basicConfig(filename=log_name, filemode='w', format='%(asctime)s %(filen
                     level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-run_date = '20210123'
+run_date = '20210120'
 today = parser.parse(run_date).date()
 
 date_str = today.strftime("%Y%m%d")
